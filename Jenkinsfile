@@ -6,6 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                echo '실행중' // 실행 중에 메시지 출력
                 sh './gradlew build' // Gradle을 사용하여 프로젝트 빌드
             }
         }
@@ -21,6 +22,9 @@ pipeline {
         }
     }
     post {
+	always {
+            echo '실행완료' // 실행이 완료되면 메시지 출력
+	}
         success {
             emailext(
                 subject: "Build Success - ${env.JOB_NAME} - #${env.BUILD_NUMBER}",
