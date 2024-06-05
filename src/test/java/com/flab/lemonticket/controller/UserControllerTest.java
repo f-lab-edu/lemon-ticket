@@ -27,4 +27,20 @@ class UserControllerTest {
         User createdUser = userService.registerUser(user);
         assertNotNull(createdUser);
     }
+
+    @Test
+    void login_Test(){
+        User user = new User();
+        user.setEmail("test@example.com");
+        user.setPassword("password123");
+        user.setRole("USER");
+        user.setUsername("TEST");
+
+        String password = user.getPassword();
+        User createdUser = userService.registerUser(user);
+        assertNotNull(createdUser);
+
+        User loggedInUser = userService.login(user.getEmail(), password);
+        assertNotNull(loggedInUser);
+    }
 }

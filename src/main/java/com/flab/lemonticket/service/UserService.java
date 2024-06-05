@@ -25,13 +25,14 @@ public class UserService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //return userRepository.save(user);
-        User result = userRepository.save(user);
-        if( result != null ){
-            log.info("ok");
-        } else {
-            log.error("null");
+        return userRepository.save(user);
+    }
+
+    public User login(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if( user != null && passwordEncoder.matches(password, user.getPassword())){
+            return user;
         }
-        return result;
+        return null;
     }
 }

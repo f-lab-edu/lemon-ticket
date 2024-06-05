@@ -22,4 +22,14 @@ public class UserController {
         User createdUser = userService.registerUser(user);
         return ResponseEntity.ok(createdUser);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@Valid @RequestBody User user){
+        User loggedInUser = userService.login(user.getEmail(), user.getPassword());
+        if( loggedInUser != null ){
+            return ResponseEntity.ok(loggedInUser);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
