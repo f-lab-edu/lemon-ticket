@@ -17,14 +17,15 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                // 배포 단계 실행
+                echo '배포 단계 실행' // 배포 단계 실행 메시지 출력
+                // 실제 배포 작업이 여기에 추가됩니다.
             }
         }
     }
     post {
-	always {
+        always {
             echo '실행완료' // 실행이 완료되면 메시지 출력
-	}
+        }
         success {
             emailext(
                 subject: "Build Success - ${env.JOB_NAME} - #${env.BUILD_NUMBER}",
