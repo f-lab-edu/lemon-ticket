@@ -25,20 +25,13 @@ pipeline {
     post {
         always {
             echo '실행완료' // 실행이 완료되면 메시지 출력
+            telegramSend message: "Build #${env.BUILD_NUMBER} finished"
         }
         success {
-            emailext(
-                subject: "Build Success - ${env.JOB_NAME} - #${env.BUILD_NUMBER}",
-                body: "Build Successful.",
-                to: "peten@kakao.com"
-            )
+            telegramSend message: "Build Success - ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
         }
         failure {
-            emailext(
-                subject: "Build Failure - ${env.JOB_NAME} - #${env.BUILD_NUMBER}",
-                body: "Build Failed.",
-                to: "peten@kakao.com"
-            )
+            telegramSend message: "Build Failure - ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
             script {
                 // 실패한 경우 해당 커밋을 되돌리는 단계
                 sh 'git reset --hard HEAD^'
