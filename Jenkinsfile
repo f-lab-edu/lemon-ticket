@@ -3,6 +3,10 @@ pipeline {
     triggers {
         githubPush()
     }
+    environment {
+        TELEGRAM_BOT_TOKEN = credentials('TELEGRAM_BOT_TOKEN')
+        TELEGRAM_CHAT_ID = credentials('TELEGRAM_CHAT_ID')
+    }
     stages {
         stage('Build') {
             steps {
@@ -25,14 +29,25 @@ pipeline {
     post {
         always {
             echo '실행완료' // 실행이 완료되면 메시지 출력
-            telegramSend message: "Build #${env.BUILD_NUMBER} finished"
         }
         success {
-            telegramSend message: "Build Success - ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
+            script {
+                def currentDate = sh(script: 'date "+%Y-%m-%d %H:%M:%S"', returnStdout: true).trim()
+                sh """
+                curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage \
+                    -d chat_id=${TELEGRAM_CHAT_ID} \
+                    -d text="[${currentDate}] 성공(${env.BUILD_NUMBER})"
+                """
+            }
         }
         failure {
-            telegramSend message: "Build Failure - ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
             script {
+                def currentDate = sh(script: 'date "+%Y-%m-%d %H:%M:%S"', returnStdout: true).trim()
+                sh """
+                curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage \
+                    -d chat_id=${TELEGRAM_CHAT_ID} \
+                    -d text="[${currentDate}] 실패(${env.BUILD_NUMBER})"
+                """
                 // 실패한 경우 해당 커밋을 되돌리는 단계
                 sh 'git reset --hard HEAD^'
             }
