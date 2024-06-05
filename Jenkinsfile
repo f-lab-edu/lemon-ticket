@@ -40,7 +40,7 @@ pipeline {
             )
             script {
                 // 실패한 경우 해당 커밋을 되돌리는 단계
-                git 'reset --hard HEAD^'
+                sh 'git reset --hard HEAD^'
             }
         }
     }
