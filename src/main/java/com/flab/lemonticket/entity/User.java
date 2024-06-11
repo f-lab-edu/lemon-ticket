@@ -16,24 +16,25 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "username", nullable = false, length = 50)
     private String username;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @Column(length = 15)
+    @Column(name = "phone_number", length = 15)
     private String phoneNumber;
 
-    @Column(/*nullable = false,*/ length = 25)
+    @Column(name = "role", nullable = false, length = 25)
     private String role;// = "NORMAL";
 
-    @Column(length = 255)
+    @Column(name = "profile_img", length = 255)
     private String profileImg;
 
     @Column(nullable = false, updatable = false)
