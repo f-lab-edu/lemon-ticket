@@ -29,6 +29,8 @@ import java.util.Map;
 @RequestMapping("/api/users")
 public class UserController {
 
+
+    
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -68,6 +70,9 @@ public class UserController {
 
         return ResponseEntity.ok(response);
     }
+
+
+    
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         authenticationManager.authenticate(
@@ -94,6 +99,8 @@ public class UserController {
     }
 
 
+    
+
     @GetMapping("/test_normal")
     public ResponseEntity<Map<String, Object>> testNormal() {
         Map<String, Object> response = new HashMap<>();
@@ -108,6 +115,9 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+
+
+    
     @GetMapping("/test_no_auth")
     public ResponseEntity<Map<String, Object>> test_no_auth(){
         Map<String, Object> response = new HashMap<>();
