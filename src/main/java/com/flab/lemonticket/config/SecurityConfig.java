@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/users/login", "/api/users/register", "/api/users/test_no_auth").permitAll()
+                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**").permitAll()
                                 .requestMatchers("/api/users/test_normal").hasRole("USER")
                                 .requestMatchers("/api/users/test_event_admin").hasRole("ORGANIZER")
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")

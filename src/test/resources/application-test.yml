@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:lemon_ticket_test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+security:
+  jwt:
+    token:
+
+file:
+  upload-dir: ./uploads-test
